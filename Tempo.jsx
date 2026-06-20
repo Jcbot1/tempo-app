@@ -338,7 +338,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
   const menuItemStyle = {
     display:"flex", alignItems:"center", justifyContent:"space-between",
-    width:"100%", textAlign:"left", border:"none",
+    width:"100%", textAlign:"left", border:"none", background:"transparent",
     padding:"0.9rem 1.25rem", fontFamily:SYS, fontSize:"0.95rem",
     color:T.text, cursor:"pointer",
     transition:"background 0.1s",
