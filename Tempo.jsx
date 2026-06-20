@@ -316,6 +316,9 @@ function ProfileModal({ name, iconId, bg, iconColor, onSave, onClose }) {
           <button onClick={() => { onSave(draftName || "Athlete", draftIconId, draftBg, draftIColor); onClose(); }}
             style={{ ...btn("primary"), borderRadius:"99px", flex:1 }}>Save</button>
           <button onClick={onClose}
+            onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
+            onPointerUp={e => { e.currentTarget.style.background = ""; }}
+            onPointerLeave={e => e.currentTarget.style.background = ""}
             style={{ ...btn("ghost"), borderRadius:"99px", flex:1 }}>Cancel</button>
         </div>
       </div>
