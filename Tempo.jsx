@@ -150,13 +150,11 @@ function buildTheme(mode, accentKey) {
     stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
     overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
     modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
-    glassBg: mode === "light"
-      ? "linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.68) 100%)"
-      : "linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 100%)",
-    glassBorder: mode === "light" ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.18)",
+    glassBg: mode === "light" ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.12)",
+    glassBorder: mode === "light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.05)",
     glassShadow: mode === "light"
-      ? "inset 0 1px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.07), inset -1px 0 0 rgba(0,0,0,0.03), 0 4px 20px rgba(0,0,0,0.1)"
-      : "inset 0 1px 0 rgba(255,255,255,0.36), inset 1px 0 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(0,0,0,0.42), inset -1px 0 0 rgba(0,0,0,0.2), 0 4px 24px rgba(0,0,0,0.45)",
+      ? "0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9)"
+      : "0 8px 28px rgba(0,0,0,0.75), 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)",
   };
 }
 
