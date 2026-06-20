@@ -1498,6 +1498,11 @@ function App() {
   const [startBounce, pressStart, releaseStart] = useBounce();
   const [, forceUpdate] = useState(0);
 
+  useEffect(() => {
+    document.body.style.overflow = screen === "history" ? "" : "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [screen]);
+
   function handleSetTheme(t) {
     setTheme(t); localStorage.setItem(THEME_KEY, t);
     T = buildTheme(resolveTheme(t), accent);
