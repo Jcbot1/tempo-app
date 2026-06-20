@@ -151,11 +151,11 @@ function buildTheme(mode, accentKey) {
     stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
     overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
     modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
-    glassBg: mode === "light" ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.05)",
-    glassBorder: mode === "light" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.07)",
+    glassBg: mode === "light" ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.05)",
+    glassBorder: mode === "light" ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.07)",
     glassShadow: mode === "light"
-      ? "0 2px 12px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)"
-      : "0 4px 20px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35)",
+      ? "0 2px 12px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06), inset 1.5px 1.5px 0 rgba(255,255,255,0.9)"
+      : "0 4px 20px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35), inset 1.5px 1.5px 0 rgba(255,255,255,0.55), inset -1px -1px 0 rgba(0,0,0,0.25)",
   };
 }
 
@@ -256,24 +256,6 @@ const STATIC_STYLES = `
   .glow-slow { animation: breatheSlow 4s ease-in-out infinite; }
   .glow-idle { animation: breatheIdle 6s ease-in-out infinite; }
 
-  .glass-btn { position: relative; }
-  .glass-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: -1;
-    pointer-events: none;
-    background: conic-gradient(
-      from 300deg,
-      rgba(255,255,255,0.0)  0deg,
-      rgba(255,255,255,0.85) 15deg,
-      rgba(255,255,255,0.0)  40deg,
-      transparent            360deg
-    );
-    -webkit-mask: radial-gradient(circle, transparent 89%, black 93%);
-    mask: radial-gradient(circle, transparent 89%, black 93%);
-  }
 `;
 
 const PROFILE_ICON_DEFS = [
@@ -411,7 +393,6 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerUp={() => { setHamburgerPressed(false); setOpen(o => !o); if (open) setSection(null); }}
         onPointerLeave={() => setHamburgerPressed(false)}
         onPointerCancel={() => setHamburgerPressed(false)}
-        className="glass-btn"
         style={{
         background: hamburgerPressed ? T.pressBgStrong : T.glassBg,
         backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
@@ -1561,7 +1542,6 @@ function App() {
                 }}
                 onPointerLeave={() => setBackPressed(false)}
                 onPointerCancel={() => setBackPressed(false)}
-                className="glass-btn"
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
                 background: backPressed ? T.pressBgStrong : T.glassBg,
