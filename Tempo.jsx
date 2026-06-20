@@ -360,7 +360,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
     <div style={{ padding:"0.7rem 1.25rem", borderBottom:"1px solid "+T.border,
       display:"flex", alignItems:"center", gap:"0.6rem", minHeight:"56px" }}>
       <button onClick={back}
-        onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease}
+        onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
         style={{ background:"none", border:"none", color:T.muted2,
         cursor:"pointer", fontSize:"1.3rem", padding:"0 0.25rem", lineHeight:1,
         display:"flex", alignItems:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
@@ -378,6 +378,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerDown={() => setHamburgerPressed(true)}
         onPointerUp={() => { setHamburgerPressed(false); setOpen(o => !o); if (open) setSection(null); }}
         onPointerLeave={() => setHamburgerPressed(false)}
+        onPointerCancel={() => setHamburgerPressed(false)}
         style={{
         background: hamburgerPressed
           ? T.pressBgStrong
@@ -409,7 +410,9 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         }}>
 
           {section === null && (
-            <button onClick={() => { close(); onShowProfile(); }} style={{
+            <button onClick={() => { close(); onShowProfile(); }}
+              onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
+              style={{
               display:"flex", alignItems:"center", gap:"0.85rem",
               width:"100%", background:"transparent", border:"none", padding:"0.9rem 1.25rem",
               borderBottom:"0.5px solid "+(T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"),
@@ -430,6 +433,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 onPointerDown={currentScreen === "timer" ? undefined : menuPress}
                 onPointerUp={currentScreen === "timer" ? undefined : () => { menuRelease; close(); onShowHistory(); }}
                 onPointerLeave={currentScreen === "timer" ? undefined : menuRelease}
+                onPointerCancel={currentScreen === "timer" ? undefined : menuRelease}
                 disabled={currentScreen === "timer"}
                 style={{ ...menuItemStyle, opacity: currentScreen === "timer" ? 0.35 : 1, cursor: currentScreen === "timer" ? "default" : "pointer" }}>
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
@@ -441,7 +445,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 </span>
                 <span style={{ fontSize:"0.8rem", color:T.muted }}>›</span>
               </button>
-              <button onClick={() => setSection("appearance")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} style={{ ...menuItemStyle }}
+              <button onClick={() => setSection("appearance")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -455,7 +459,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 <span style={{ fontSize:"0.8rem", color:T.muted }}>›</span>
               </button>
 
-              <button onClick={() => setSection("sound")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} style={{ ...menuItemStyle }}
+              <button onClick={() => setSection("sound")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -528,7 +532,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
               </div>
 
               {/* Sound pack selector */}
-              <button onClick={() => setSection("soundpack")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} style={{ ...menuItemStyle,
+              <button onClick={() => setSection("soundpack")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle,
                 borderTop:T.hairline }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
@@ -582,7 +586,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 display:"flex", alignItems:"center", justifyContent:"space-between", minHeight:"56px" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:"0.6rem" }}>
                   <button onClick={() => setSection(null)}
-                    onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease}
+                    onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
                     style={{ background:"none", border:"none", color:T.muted2, cursor:"pointer",
                       fontSize:"1.3rem", padding:"0 0.25rem", lineHeight:1,
                       display:"flex", alignItems:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
@@ -610,7 +614,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                   })}
                 </div>
               </div>
-              <button onClick={() => setSection("color")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} style={{ ...menuItemStyle }}
+              <button onClick={() => setSection("color")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <span style={{ width:"18px", height:"18px", borderRadius:"50%",
@@ -835,6 +839,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerDown={handleMinusDown}
           onPointerUp={handleMinusUp}
           onPointerLeave={() => handleLeave(setMinusPressed)}
+          onPointerCancel={() => handleLeave(setMinusPressed)}
           style={{
           width:"36px", height:"36px", borderRadius:"99px",
           background: minusPressed ? T.pressBg : "transparent",
@@ -854,6 +859,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerDown={handlePlusDown}
           onPointerUp={handlePlusUp}
           onPointerLeave={() => handleLeave(setPlusPressed)}
+          onPointerCancel={() => handleLeave(setPlusPressed)}
           style={{
           width:"36px", height:"36px", borderRadius:"99px",
           background: plusPressed ? T.pressBg : "transparent",
@@ -974,6 +980,7 @@ function DoneScreen({ onBack, sets, exercises, completedRounds }) {
           onPointerDown={() => pressBack()}
           onPointerUp={() => { releaseBack(); setTimeout(onBack, 300); }}
           onPointerLeave={() => releaseBack()}
+          onPointerCancel={() => releaseBack()}
           style={{
             ...btn("primary"), borderRadius:"99px", padding:"0.9rem 2.5rem", fontSize:"1rem",
             background:`linear-gradient(135deg,${T.accent} 0%,${T.gradient2} 100%)`,
@@ -1265,6 +1272,10 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
                 releaseReset();
                 if (resetLongRef.current) { clearTimeout(resetLongRef.current); resetLongRef.current = null; }
               }}
+              onPointerCancel={() => {
+                releaseReset();
+                if (resetLongRef.current) { clearTimeout(resetLongRef.current); resetLongRef.current = null; }
+              }}
               style={{
               width:"52px", height:"52px", borderRadius:"50%", border:"1px solid "+T.border,
               background: resetBounce ? T.pressBg : T.surface2,
@@ -1283,6 +1294,7 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
               onPointerDown={() => pressPlay()}
               onPointerUp={() => { releasePlay(); setRunning(r => !r); if (!running) { vibe(HAPTICS[phase] || HAPTICS.workout); beep(phase); } }}
               onPointerLeave={() => releasePlay()}
+              onPointerCancel={() => releasePlay()}
               style={{
               width:"72px", height:"72px", borderRadius:"50%", border:"none", cursor:"pointer",
               background:`linear-gradient(135deg,${T.accent} 0%,${T.gradient2} 100%)`,
@@ -1327,6 +1339,10 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
                 // If long press fired (ref is null), do nothing
               }}
               onPointerLeave={() => {
+                releaseSkip();
+                if (skipLongRef.current) { clearTimeout(skipLongRef.current); skipLongRef.current = null; }
+              }}
+              onPointerCancel={() => {
                 releaseSkip();
                 if (skipLongRef.current) { clearTimeout(skipLongRef.current); skipLongRef.current = null; }
               }}
@@ -1503,6 +1519,7 @@ function App() {
                   else document.dispatchEvent(new CustomEvent("tempo-quit"));
                 }}
                 onPointerLeave={() => setBackPressed(false)}
+                onPointerCancel={() => setBackPressed(false)}
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
                 background: backPressed
@@ -1632,6 +1649,7 @@ function App() {
                 }, 300);
               }}
               onPointerLeave={() => releaseStart()}
+              onPointerCancel={() => releaseStart()}
               style={{
                 width:"100%", maxWidth:"250px", height:"52px",
                 borderRadius:"99px", border:"none", cursor:"pointer",
