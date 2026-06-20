@@ -185,6 +185,13 @@ const inp = (extra = {}) => ({
   padding:"0.6rem 0.85rem", outline:"none", ...extra
 });
 
+const modalOverlay = () => ({
+  position:"fixed", inset:0, zIndex:9999,
+  background:T.overlayBg,
+  backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)",
+  display:"flex", alignItems:"center", justifyContent:"center", padding:"1.5rem",
+});
+
 const SYS = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`;
 const SYS_MONO = `ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", monospace`;
 
@@ -290,10 +297,8 @@ function ProfileModal({ name, iconId, bg, iconColor, onSave, onClose }) {
   }
 
   return (
-    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.65)", zIndex:9999,
-      display:"flex", alignItems:"center", justifyContent:"center", padding:"1.5rem" }}
-      onClick={onClose}>
-      <div style={{ ...card({ maxWidth:"320px", width:"100%", padding:"2rem" }) }}
+    <div style={modalOverlay()} onClick={onClose}>
+      <div style={{ ...card({ maxWidth:"320px", width:"100%", padding:"2rem" }), boxShadow:T.modalShadow }}
         onClick={e => e.stopPropagation()}>
         <p style={{ fontFamily:SYS_MONO, fontSize:"0.68rem", letterSpacing:"0.12em",
           color:T.muted2, marginBottom:"1.25rem" }}>PROFILE</p>
@@ -1377,10 +1382,7 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
 function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", onConfirm, onClose }) {
   const color = variant === "accent-tonal" ? T.accent : T.red;
   return (
-    <div style={{ position:"fixed", inset:0, background:T.overlayBg,
-      zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
-      padding:"1.5rem", backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}
-      onClick={onClose}>
+    <div style={modalOverlay()} onClick={onClose}>
       <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }), boxShadow:T.modalShadow }}
         onClick={e => e.stopPropagation()}>
         <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
