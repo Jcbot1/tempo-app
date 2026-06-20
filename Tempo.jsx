@@ -371,9 +371,9 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         style={{
         background: hamburgerPressed
           ? T.pressBgStrong
-          : T.mode==="light" ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.1)",
+          : T.mode==="light" ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.1)",
         backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
-        border:"1px solid "+(T.mode==="light" ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.1)"),
+        border:"1px solid "+(T.mode==="light" ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.1)"),
         borderRadius:"99px", cursor:"pointer", display:"flex", flexDirection:"column",
         gap:"4px", alignItems:"center", justifyContent:"center",
         width:"44px", height:"44px", flexShrink:0,
@@ -382,7 +382,8 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
       }}>
         {[0,1,2].map(i => (
           <span key={i} style={{ display:"block", width:"16px", height:"1.5px",
-            background:T.muted2, borderRadius:"2px" }} />
+            background: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)",
+            borderRadius:"2px" }} />
         ))}
       </button>
 
