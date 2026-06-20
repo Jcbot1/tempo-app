@@ -454,13 +454,13 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
           {section === null && (
             <>
+              {currentScreen !== "timer" && (
               <button
-                onPointerDown={currentScreen === "timer" ? undefined : menuPress}
-                onPointerUp={currentScreen === "timer" ? undefined : () => { menuRelease; close(); onShowHistory(); }}
-                onPointerLeave={currentScreen === "timer" ? undefined : menuRelease}
-                onPointerCancel={currentScreen === "timer" ? undefined : menuRelease}
-                disabled={currentScreen === "timer"}
-                style={{ ...menuItemStyle, opacity: currentScreen === "timer" ? 0.35 : 1, cursor: currentScreen === "timer" ? "default" : "pointer" }}>
+                onPointerDown={menuPress}
+                onPointerUp={() => { menuRelease; close(); onShowHistory(); }}
+                onPointerLeave={menuRelease}
+                onPointerCancel={menuRelease}
+                style={{ ...menuItemStyle }}>
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/>
@@ -470,6 +470,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 </span>
                 <span style={{ fontSize:"0.8rem", color:T.muted }}>›</span>
               </button>
+              )}
               <button onClick={() => setSection("appearance")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
