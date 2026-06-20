@@ -317,8 +317,9 @@ function ProfileModal({ name, iconId, bg, iconColor, onSave, onClose }) {
             style={{ ...btn("primary"), borderRadius:"99px", flex:1 }}>Save</button>
           <button onClick={onClose}
             onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
-            onPointerUp={e => { e.currentTarget.style.background = ""; }}
-            onPointerLeave={e => e.currentTarget.style.background = ""}
+            onPointerUp={e => { e.currentTarget.style.background = T.surface2; }}
+            onPointerLeave={e => e.currentTarget.style.background = T.surface2}
+            onPointerCancel={e => e.currentTarget.style.background = T.surface2}
             style={{ ...btn("ghost"), borderRadius:"99px", flex:1 }}>Cancel</button>
         </div>
       </div>
@@ -1393,13 +1394,15 @@ function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", 
             onPointerDown={e => e.currentTarget.style.background = color+"55"}
             onPointerUp={e => { e.currentTarget.style.background = color+"22"; onConfirm(); }}
             onPointerLeave={e => e.currentTarget.style.background = color+"22"}
+            onPointerCancel={e => e.currentTarget.style.background = color+"22"}
             style={{ ...btn(variant), borderRadius:"99px", justifyContent:"center", width:"100%" }}>
             {confirmLabel}
           </button>
           <button
             onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
-            onPointerUp={e => { e.currentTarget.style.background = ""; onClose(); }}
-            onPointerLeave={e => e.currentTarget.style.background = ""}
+            onPointerUp={e => { e.currentTarget.style.background = T.surface2; onClose(); }}
+            onPointerLeave={e => e.currentTarget.style.background = T.surface2}
+            onPointerCancel={e => e.currentTarget.style.background = T.surface2}
             style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%" }}>
             Keep going
           </button>
