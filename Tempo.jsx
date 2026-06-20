@@ -359,6 +359,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
   const [open,    setOpen]    = useState(false);
   const [section, setSection] = useState(null);
   const navRef = useRef(null);
+  const supportsHaptics = !!navigator.vibrate;
 
   useEffect(() => {
     if (!open) return;
@@ -491,7 +492,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                     <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
                     <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
                   </svg>
-                  <span>Sound & Haptic</span>
+                  <span>{supportsHaptics ? "Sound & Haptic" : "Sound"}</span>
                 </span>
                 <span style={{ fontSize:"0.8rem", color:T.muted }}>›</span>
               </button>
@@ -506,7 +507,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
           {section === "sound" && (
             <>
-              {sectionHeader("SOUND & HAPTIC", () => setSection(null))}
+              {sectionHeader(supportsHaptics ? "SOUND & HAPTIC" : "SOUND", () => setSection(null))}
 
               {/* Sound toggle */}
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
@@ -530,7 +531,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                 </button>
               </div>
 
-              {/* Haptic toggle */}
+              {supportsHaptics && (
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
                 padding:"0.9rem 1.25rem",
                 borderTop:T.hairline }}>
@@ -554,6 +555,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                     transition:"left 0.2s", boxShadow:"0 1px 4px rgba(0,0,0,0.25)" }}/>
                 </button>
               </div>
+              )}
 
               {/* Sound pack selector */}
               <button onClick={() => setSection("soundpack")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle,
