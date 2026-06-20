@@ -1499,7 +1499,7 @@ function App() {
   const [, forceUpdate] = useState(0);
 
   useEffect(() => {
-    document.body.style.overflow = screen === "history" ? "" : "hidden";
+    document.body.style.overflow = (screen === "home" || screen === "history") ? "" : "hidden";
     return () => { document.body.style.overflow = ""; };
   }, [screen]);
 
