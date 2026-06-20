@@ -391,11 +391,12 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         transition:"background 0.1s",
         boxShadow: T.mode==="light" ? "0 4px 24px rgba(0,0,0,0.08)" : "0 4px 24px rgba(0,0,0,0.22)",
       }}>
-        {[0,1,2].map(i => (
-          <span key={i} style={{ display:"block", width:"16px", height:"1.5px",
-            background: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)",
-            borderRadius:"2px" }} />
-        ))}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)" }}>
+          <path d="M20 7L4 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M20 12L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M20 17L4 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
       </button>
 
       {open && (
