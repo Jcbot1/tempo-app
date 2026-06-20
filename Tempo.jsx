@@ -308,6 +308,12 @@ function ProfileModal({ name, iconId, bg, iconColor, onSave, onClose }) {
   const [draftBg,     setDraftBg]     = useState(bg);
   const [draftIColor, setDraftIColor] = useState(iconColor);
 
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
   function randomIcon() {
     const combo = randomProfileCombo(draftIconId);
     setDraftIconId(combo.iconId); setDraftBg(combo.bg); setDraftIColor(combo.iconColor);
@@ -1415,6 +1421,13 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
 
 function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", onConfirm, onClose }) {
   const color = variant === "accent-tonal" ? T.accent : T.red;
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
   return (
     <div style={modalOverlay()} onClick={onClose}>
       <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }), boxShadow:T.modalShadow }}
