@@ -139,7 +139,18 @@ function buildTheme(mode, accentKey) {
     text:"#ede9fe", muted:"#6b6080", muted2:"#a094b8",
   };
   const scheme = ACCENT_SCHEMES[accentKey] || ACCENT_SCHEMES.purple;
-  return { ...base, ...scheme[mode], gradient2: scheme.gradient2 };
+  const divider     = mode === "light" ? "rgba(0,0,0,0.08)"       : "rgba(255,255,255,0.08)";
+  return {
+    ...base, ...scheme[mode], gradient2: scheme.gradient2,
+    pressBg:       mode === "light" ? "rgba(0,0,0,0.1)"        : "rgba(255,255,255,0.15)",
+    pressBgStrong: mode === "light" ? "rgba(0,0,0,0.1)"        : "rgba(255,255,255,0.22)",
+    pressBgSoft:   mode === "light" ? "rgba(0,0,0,0.08)"       : "rgba(255,255,255,0.12)",
+    divider,
+    hairline:      "0.5px solid " + divider,
+    stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
+    overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
+    modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
+  };
 }
 
 function resolveTheme(t) {
@@ -332,8 +343,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
     color:T.text, cursor:"pointer",
     transition:"background 0.1s",
   };
-  const pressedBg = T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)";
-  const menuPress = (e) => { e.currentTarget.style.background = pressedBg; };
+  const menuPress   = (e) => { e.currentTarget.style.background = T.pressBgSoft; };
   const menuRelease = (e) => { e.currentTarget.style.background = "transparent"; };
 
   const sectionHeader = (label, back) => (
@@ -360,7 +370,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerLeave={() => setHamburgerPressed(false)}
         style={{
         background: hamburgerPressed
-          ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.22)")
+          ? T.pressBgStrong
           : T.mode==="light" ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.1)",
         backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
         border:"1px solid "+(T.mode==="light" ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.1)"),
@@ -449,7 +459,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
               <p style={{ fontFamily:SYS_MONO, fontSize:"0.6rem", letterSpacing:"0.1em",
                 color:T.muted, textAlign:"center", padding:"0.6rem 1.25rem",
-                borderTop:"0.5px solid "+(T.mode==="light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)") }}>
+                borderTop:T.hairline }}>
                 TEMPO {VERSION}
               </p>
             </>
@@ -484,7 +494,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
               {/* Haptic toggle */}
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
                 padding:"0.9rem 1.25rem",
-                borderTop:"0.5px solid "+(T.mode==="light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)") }}>
+                borderTop:T.hairline }}>
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem", fontFamily:SYS, fontSize:"0.95rem", color:T.text }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="7" y="2" width="10" height="20" rx="2"/>
@@ -508,7 +518,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
               {/* Sound pack selector */}
               <button onClick={() => setSection("soundpack")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} style={{ ...menuItemStyle,
-                borderTop:"0.5px solid "+(T.mode==="light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)") }}
+                borderTop:T.hairline }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -547,7 +557,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                       {active && <span style={{ fontSize:"0.85rem" }}>✓</span>}
                     </button>
                     {i < arr.length-1 && (
-                      <div style={{ height:"0.5px", background: T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)", margin:"0 1rem" }} />
+                      <div style={{ height:"0.5px", background:T.divider, margin:"0 1rem" }} />
                     )}
                   </Fragment>
                 );
@@ -622,9 +632,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                       {active && <span style={{ fontSize:"0.85rem" }}>✓</span>}
                     </button>
                     {i < arr.length-1 && (
-                      <div style={{ height:"0.5px",
-                        background: T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)",
-                        margin:"0 1rem" }} />
+                      <div style={{ height:"0.5px", background:T.divider, margin:"0 1rem" }} />
                     )}
                   </Fragment>
                 );
@@ -684,7 +692,7 @@ function HistoryScreen({ onClose }) {
       {/* Sticky weekly calendar */}
       <div style={{
         position:"sticky", top:"56px", zIndex:50,
-        background: T.mode==="light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
+        background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.75rem 1rem",
         borderBottom:"1px solid "+T.border,
@@ -818,9 +826,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerLeave={() => handleLeave(setMinusPressed)}
           style={{
           width:"36px", height:"36px", borderRadius:"99px",
-          background: minusPressed
-            ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.15)")
-            : "transparent",
+          background: minusPressed ? T.pressBg : "transparent",
           border:"1px solid "+T.border,
           color:T.muted2, cursor:"pointer",
           display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
@@ -839,9 +845,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerLeave={() => handleLeave(setPlusPressed)}
           style={{
           width:"36px", height:"36px", borderRadius:"99px",
-          background: plusPressed
-            ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.15)")
-            : "transparent",
+          background: plusPressed ? T.pressBg : "transparent",
           border:"1px solid "+T.border,
           color:T.muted2, cursor:"pointer",
           display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
@@ -888,7 +892,7 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
       {/* Sticky total time banner — minimal */}
       <div style={{
         position:"sticky", top:"56px", zIndex:50,
-        background: T.mode==="light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
+        background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.6rem 1rem", textAlign:"center",
         borderBottom:"1px solid "+T.border,
@@ -1252,9 +1256,7 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
               }}
               style={{
               width:"52px", height:"52px", borderRadius:"50%", border:"1px solid "+T.border,
-              background: resetBounce
-                ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.15)")
-                : T.surface2,
+              background: resetBounce ? T.pressBg : T.surface2,
               cursor:"pointer", transition:"background 0.1s",
               display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
             }}>
@@ -1319,9 +1321,7 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
               }}
               style={{
               width:"52px", height:"52px", borderRadius:"50%", border:"1px solid "+T.border,
-              background: skipBounce
-                ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.15)")
-                : T.surface2,
+              background: skipBounce ? T.pressBg : T.surface2,
               cursor:"pointer", transition:"background 0.1s",
               display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
             }}>
@@ -1364,6 +1364,43 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
           })()}
         </>
       )}
+    </div>
+  );
+}
+
+function ConfirmModal({ title, titleColor, heading, body, confirmLabel, onConfirm, onClose }) {
+  const color = titleColor || T.red;
+  return (
+    <div style={{ position:"fixed", inset:0, background:T.overlayBg,
+      zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
+      padding:"1.5rem", backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}
+      onClick={onClose}>
+      <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }), boxShadow:T.modalShadow }}
+        onClick={e => e.stopPropagation()}>
+        <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
+          color, marginBottom:"0.5rem" }}>{title}</p>
+        <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1.05rem",
+          color:T.text, marginBottom:"0.5rem" }}>{heading}</p>
+        <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
+          lineHeight:1.5, marginBottom:"1.5rem" }}>{body}</p>
+        <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem" }}>
+          <button
+            onPointerDown={e => e.currentTarget.style.background = color+"55"}
+            onPointerUp={e => { e.currentTarget.style.background = color+"22"; onConfirm(); }}
+            onPointerLeave={e => e.currentTarget.style.background = color+"22"}
+            style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center",
+              width:"100%", background:color+"22", color, transition:"background 0.1s" }}>
+            {confirmLabel}
+          </button>
+          <button
+            onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
+            onPointerUp={e => { e.currentTarget.style.background = ""; onClose(); }}
+            onPointerLeave={e => e.currentTarget.style.background = ""}
+            style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%", transition:"background 0.1s" }}>
+            Keep going
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -1459,7 +1496,7 @@ function App() {
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
                 background: backPressed
-                  ? (T.mode==="light" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.22)")
+                  ? T.pressBgStrong
                   : T.mode==="light" ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.1)",
                 backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
                 border:"1px solid "+(T.mode==="light" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.12)"),
@@ -1538,115 +1575,27 @@ function App() {
             onRequestSkipAll={(cb) => { setQuitCallback(() => cb); setConfirmSkipAll(true); }} />}
         </div>
 
-        {/* Quit confirmation modal — at App root so it covers full viewport */}
-        {confirmQuit && (
-          <div style={{
-            position:"fixed", top:0, left:0, right:0, bottom:0,
-            background: T.mode === "light" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.7)",
-            zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
-            padding:"1.5rem", backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)",
-          }} onClick={() => setConfirmQuit(false)}>
-            <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }),
-              boxShadow: T.mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
-            }} onClick={e => e.stopPropagation()}>
-              <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
-                color:T.red, marginBottom:"0.5rem" }}>QUIT WORKOUT</p>
-              <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1.05rem",
-                color:T.text, marginBottom:"0.5rem" }}>End this session?</p>
-              <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
-                lineHeight:1.5, marginBottom:"1.5rem" }}>Your progress won't be saved.</p>
-              <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem" }}>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.red+"55"}
-                  onPointerUp={e => { e.currentTarget.style.background = T.red+"22"; setConfirmQuit(false); if (quitCallback) quitCallback(); }}
-                  onPointerLeave={e => e.currentTarget.style.background = T.red+"22"}
-                  style={{ ...btn("danger"), borderRadius:"99px", justifyContent:"center",
-                    width:"100%", background:T.red+"22", transition:"background 0.1s" }}>
-                  End workout
-                </button>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)"}
-                  onPointerUp={e => { e.currentTarget.style.background = ""; setConfirmQuit(false); }}
-                  onPointerLeave={e => e.currentTarget.style.background = ""}
-                  style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%", transition:"background 0.1s" }}>
-                  Keep going
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {confirmQuit && <ConfirmModal
+          title="QUIT WORKOUT" heading="End this session?"
+          body="Your progress won't be saved."
+          confirmLabel="End workout"
+          onConfirm={() => { setConfirmQuit(false); if (quitCallback) quitCallback(); }}
+          onClose={() => setConfirmQuit(false)} />}
 
-        {/* Reset workout confirmation */}
-        {confirmReset && (
-          <div style={{ position:"fixed", inset:0, background: T.mode==="light" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.7)",
-            zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
-            padding:"1.5rem", backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}
-            onClick={() => setConfirmReset(false)}>
-            <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }),
-              boxShadow: T.mode==="light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)" }}
-              onClick={e => e.stopPropagation()}>
-              <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
-                color:T.red, marginBottom:"0.5rem" }}>RESET WORKOUT</p>
-              <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1.05rem",
-                color:T.text, marginBottom:"0.5rem" }}>Start over?</p>
-              <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
-                lineHeight:1.5, marginBottom:"1.5rem" }}>This will reset all sets and exercises back to the beginning.</p>
-              <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem" }}>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.red+"55"}
-                  onPointerUp={e => { e.currentTarget.style.background = T.red+"22"; setConfirmReset(false); if (quitCallback) quitCallback(); }}
-                  onPointerLeave={e => e.currentTarget.style.background = T.red+"22"}
-                  style={{ ...btn("danger"), borderRadius:"99px", justifyContent:"center",
-                    width:"100%", background:T.red+"22", transition:"background 0.1s" }}>
-                  Reset workout
-                </button>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)"}
-                  onPointerUp={e => { e.currentTarget.style.background = ""; setConfirmReset(false); }}
-                  onPointerLeave={e => e.currentTarget.style.background = ""}
-                  style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%", transition:"background 0.1s" }}>
-                  Keep going
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {confirmReset && <ConfirmModal
+          title="RESET WORKOUT" heading="Start over?"
+          body="This will reset all sets and exercises back to the beginning."
+          confirmLabel="Reset workout"
+          onConfirm={() => { setConfirmReset(false); if (quitCallback) quitCallback(); }}
+          onClose={() => setConfirmReset(false)} />}
 
-        {/* Skip to cooldown confirmation */}
-        {confirmSkipAll && (
-          <div style={{ position:"fixed", inset:0, background: T.mode==="light" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.7)",
-            zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
-            padding:"1.5rem", backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}
-            onClick={() => setConfirmSkipAll(false)}>
-            <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }),
-              boxShadow: T.mode==="light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)" }}
-              onClick={e => e.stopPropagation()}>
-              <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
-                color:T.accent, marginBottom:"0.5rem" }}>SKIP TO COOLDOWN</p>
-              <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1.05rem",
-                color:T.text, marginBottom:"0.5rem" }}>Skip remaining sets?</p>
-              <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
-                lineHeight:1.5, marginBottom:"1.5rem" }}>Jump straight to the cool down phase.</p>
-              <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem" }}>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.accent+"44"}
-                  onPointerUp={e => { e.currentTarget.style.background = T.accent+"22"; setConfirmSkipAll(false); if (quitCallback) quitCallback(); }}
-                  onPointerLeave={e => e.currentTarget.style.background = T.accent+"22"}
-                  style={{ ...btn("primary"), borderRadius:"99px", justifyContent:"center",
-                    width:"100%", background:T.accent+"22", color:T.accent, transition:"background 0.1s" }}>
-                  Skip to cool down
-                </button>
-                <button
-                  onPointerDown={e => e.currentTarget.style.background = T.mode==="light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)"}
-                  onPointerUp={e => { e.currentTarget.style.background = ""; setConfirmSkipAll(false); }}
-                  onPointerLeave={e => e.currentTarget.style.background = ""}
-                  style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%", transition:"background 0.1s" }}>
-                  Keep going
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {confirmSkipAll && <ConfirmModal
+          title="SKIP TO COOLDOWN" titleColor={T.accent}
+          heading="Skip remaining sets?"
+          body="Jump straight to the cool down phase."
+          confirmLabel="Skip to cool down"
+          onConfirm={() => { setConfirmSkipAll(false); if (quitCallback) quitCallback(); }}
+          onClose={() => setConfirmSkipAll(false)} />}
 
         {/* Home screen FAB */}
         {screen === "home" && (
