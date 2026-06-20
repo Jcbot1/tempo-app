@@ -128,6 +128,17 @@ function useBounce() {
   return [pressed, press, release];
 }
 
+function GlassHighlight() {
+  return (
+    <span style={{
+      position: "absolute", inset: 0, zIndex: -1,
+      borderRadius: "inherit", pointerEvents: "none",
+      background: T.mode === "light"
+        ? "linear-gradient(148deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.22) 36%, rgba(255,255,255,0) 56%)"
+        : "linear-gradient(148deg, rgba(255,255,255,0.44) 0%, rgba(255,255,255,0.1) 36%, rgba(255,255,255,0) 56%)",
+    }} />
+  );
+}
 
 function buildTheme(mode, accentKey) {
   const base = mode === "light" ? {
@@ -151,11 +162,11 @@ function buildTheme(mode, accentKey) {
     stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
     overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
     modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
-    glassBg: mode === "light" ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.05)",
-    glassBorder: mode === "light" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.07)",
+    glassBg: mode === "light" ? "rgba(255,255,255,0.68)" : "rgba(255,255,255,0.07)",
+    glassBorder: mode === "light" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.14)",
     glassShadow: mode === "light"
-      ? "0 2px 12px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)"
-      : "0 4px 20px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35)",
+      ? "0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.07)"
+      : "0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.3)",
   };
 }
 
@@ -255,25 +266,6 @@ const STATIC_STYLES = `
   .glow-fast { animation: breatheFast 0.8s ease-in-out infinite; }
   .glow-slow { animation: breatheSlow 4s ease-in-out infinite; }
   .glow-idle { animation: breatheIdle 6s ease-in-out infinite; }
-
-  .glass-btn { position: relative; }
-  .glass-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: -1;
-    pointer-events: none;
-    background: conic-gradient(
-      from 300deg,
-      rgba(255,255,255,0.0)  0deg,
-      rgba(255,255,255,0.85) 15deg,
-      rgba(255,255,255,0.0)  40deg,
-      transparent            360deg
-    );
-    -webkit-mask: radial-gradient(circle, transparent 89%, black 93%);
-    mask: radial-gradient(circle, transparent 89%, black 93%);
-  }
 `;
 
 const PROFILE_ICON_DEFS = [
@@ -411,7 +403,6 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerUp={() => { setHamburgerPressed(false); setOpen(o => !o); if (open) setSection(null); }}
         onPointerLeave={() => setHamburgerPressed(false)}
         onPointerCancel={() => setHamburgerPressed(false)}
-        className="glass-btn"
         style={{
         background: hamburgerPressed ? T.pressBgStrong : T.glassBg,
         backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
@@ -419,11 +410,13 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         borderRadius:"99px", cursor:"pointer", display:"flex",
         alignItems:"center", justifyContent:"center",
         width:"44px", height:"44px", flexShrink:0,
+        position:"relative", overflow:"hidden",
         transition:"background 0.1s",
         boxShadow: T.glassShadow,
       }}>
+        <GlassHighlight />
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-          style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)" }}>
+          style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)", position:"relative" }}>
           <path d="M20 7L4 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           <path d="M20 12L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           <path d="M20 17L4 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -1561,7 +1554,6 @@ function App() {
                 }}
                 onPointerLeave={() => setBackPressed(false)}
                 onPointerCancel={() => setBackPressed(false)}
-                className="glass-btn"
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
                 background: backPressed ? T.pressBgStrong : T.glassBg,
@@ -1569,9 +1561,12 @@ function App() {
                 border:"1px solid "+T.glassBorder,
                 boxShadow: T.glassShadow,
                 cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
+                position:"relative", overflow:"hidden",
                 transition:"background 0.1s",
               }}>
+                <GlassHighlight />
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={T.text}
+                  style={{ position:"relative" }}
                   strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
