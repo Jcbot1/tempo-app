@@ -150,6 +150,13 @@ function buildTheme(mode, accentKey) {
     stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
     overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
     modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
+    glassBg: mode === "light"
+      ? "linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.68) 100%)"
+      : "linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 100%)",
+    glassBorder: mode === "light" ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.18)",
+    glassShadow: mode === "light"
+      ? "inset 0 1px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.07), inset -1px 0 0 rgba(0,0,0,0.03), 0 4px 20px rgba(0,0,0,0.1)"
+      : "inset 0 1px 0 rgba(255,255,255,0.36), inset 1px 0 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(0,0,0,0.42), inset -1px 0 0 rgba(0,0,0,0.2), 0 4px 24px rgba(0,0,0,0.45)",
   };
 }
 
@@ -380,16 +387,14 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerLeave={() => setHamburgerPressed(false)}
         onPointerCancel={() => setHamburgerPressed(false)}
         style={{
-        background: hamburgerPressed
-          ? T.pressBgStrong
-          : T.mode==="light" ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.1)",
+        background: hamburgerPressed ? T.pressBgStrong : T.glassBg,
         backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
-        border:"1px solid "+(T.mode==="light" ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.1)"),
+        border:"1px solid "+T.glassBorder,
         borderRadius:"99px", cursor:"pointer", display:"flex", flexDirection:"column",
         gap:"4px", alignItems:"center", justifyContent:"center",
         width:"44px", height:"44px", flexShrink:0,
         transition:"background 0.1s",
-        boxShadow: T.mode==="light" ? "0 4px 24px rgba(0,0,0,0.08)" : "0 4px 24px rgba(0,0,0,0.22)",
+        boxShadow: T.glassShadow,
       }}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
           style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)" }}>
@@ -1523,12 +1528,10 @@ function App() {
                 onPointerCancel={() => setBackPressed(false)}
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
-                background: backPressed
-                  ? T.pressBgStrong
-                  : T.mode==="light" ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.1)",
-                backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
-                border:"1px solid "+(T.mode==="light" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.12)"),
-                boxShadow: T.mode==="light" ? "0 4px 24px rgba(0,0,0,0.08)" : "0 4px 24px rgba(0,0,0,0.22)",
+                background: backPressed ? T.pressBgStrong : T.glassBg,
+                backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+                border:"1px solid "+T.glassBorder,
+                boxShadow: T.glassShadow,
                 cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
                 transition:"background 0.1s",
               }}>
