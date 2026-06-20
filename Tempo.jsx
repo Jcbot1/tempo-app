@@ -128,6 +128,18 @@ function useBounce() {
   return [pressed, press, release];
 }
 
+function GlassHighlight() {
+  return (
+    <span style={{
+      position: "absolute", inset: 0, zIndex: -1,
+      borderRadius: "inherit", pointerEvents: "none",
+      background: T.mode === "light"
+        ? "linear-gradient(148deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.22) 36%, rgba(255,255,255,0) 56%)"
+        : "linear-gradient(148deg, rgba(255,255,255,0.44) 0%, rgba(255,255,255,0.1) 36%, rgba(255,255,255,0) 56%)",
+    }} />
+  );
+}
+
 function buildTheme(mode, accentKey) {
   const base = mode === "light" ? {
     mode:"light", bg:"#f1f5f9", surface:"#ffffff", surface2:"#f8fafc",
@@ -150,11 +162,11 @@ function buildTheme(mode, accentKey) {
     stickyBg:      mode === "light" ? "rgba(241,245,249,0.95)" : "rgba(0,0,0,0.95)",
     overlayBg:     mode === "light" ? "rgba(0,0,0,0.4)"        : "rgba(0,0,0,0.7)",
     modalShadow:   mode === "light" ? "0 8px 40px rgba(0,0,0,0.18)" : "0 8px 40px rgba(0,0,0,0.5)",
-    glassBg: mode === "light" ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.12)",
-    glassBorder: mode === "light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.05)",
+    glassBg: mode === "light" ? "rgba(255,255,255,0.68)" : "rgba(255,255,255,0.07)",
+    glassBorder: mode === "light" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.14)",
     glassShadow: mode === "light"
-      ? "0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9)"
-      : "0 8px 28px rgba(0,0,0,0.75), 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)",
+      ? "0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.07)"
+      : "0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.3)",
   };
 }
 
@@ -386,16 +398,18 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerCancel={() => setHamburgerPressed(false)}
         style={{
         background: hamburgerPressed ? T.pressBgStrong : T.glassBg,
-        backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+        backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
         border:"1px solid "+T.glassBorder,
-        borderRadius:"99px", cursor:"pointer", display:"flex", flexDirection:"column",
-        gap:"4px", alignItems:"center", justifyContent:"center",
+        borderRadius:"99px", cursor:"pointer", display:"flex",
+        alignItems:"center", justifyContent:"center",
         width:"44px", height:"44px", flexShrink:0,
+        position:"relative", overflow:"hidden",
         transition:"background 0.1s",
         boxShadow: T.glassShadow,
       }}>
+        <GlassHighlight />
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-          style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)" }}>
+          style={{ color: T.mode==="light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.8)", position:"relative" }}>
           <path d="M20 7L4 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           <path d="M20 12L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           <path d="M20 17L4 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -1527,13 +1541,16 @@ function App() {
                 style={{
                 width:"44px", height:"44px", borderRadius:"99px",
                 background: backPressed ? T.pressBgStrong : T.glassBg,
-                backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+                backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
                 border:"1px solid "+T.glassBorder,
                 boxShadow: T.glassShadow,
                 cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
+                position:"relative", overflow:"hidden",
                 transition:"background 0.1s",
               }}>
+                <GlassHighlight />
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={T.text}
+                  style={{ position:"relative" }}
                   strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
