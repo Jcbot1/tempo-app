@@ -738,9 +738,9 @@ function HistoryScreen({ onClose }) {
   return (
     <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 56px)" }}>
 
-      {/* Weekly calendar */}
+      {/* Sticky weekly calendar */}
       <div style={{
-        flexShrink:0,
+        position:"sticky", top:"calc(1.5rem + 44px + env(safe-area-inset-top))", zIndex:50,
         background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.75rem 1rem",
@@ -778,7 +778,7 @@ function HistoryScreen({ onClose }) {
       </div>
 
       {/* Workout cards for selected day */}
-      <div style={{ padding:"0.75rem 0 6rem", flex:1, overflowY:"auto", minHeight:0 }}>
+      <div style={{ padding:"0.75rem 0 6rem", flex:1 }}>
         {selectedWorkouts.length === 0 ? (
           <div style={{ display:"flex", flexDirection:"column", alignItems:"center",
             justifyContent:"center", padding:"3rem 1rem", gap:"0.75rem" }}>
@@ -940,9 +940,9 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
   return (
     <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 56px)" }}>
 
-      {/* Total time banner */}
+      {/* Sticky total time banner */}
       <div style={{
-        flexShrink:0,
+        position:"sticky", top:"calc(1.5rem + 44px + env(safe-area-inset-top))", zIndex:50,
         background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.6rem 1rem", textAlign:"center",
@@ -958,7 +958,7 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
       </div>
 
       {/* Scrollable rows — no card, floats on background */}
-      <div style={{ padding:"0.5rem 0 6rem", flex:1, overflowY:"auto", minHeight:0 }}>
+      <div style={{ padding:"0.5rem 0 6rem" }}>
         {rows.map((row, i) => (
           <Fragment key={row.label}>
             <RowInput {...row} />
