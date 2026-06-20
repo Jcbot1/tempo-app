@@ -692,7 +692,7 @@ function HistoryScreen({ onClose }) {
 
       {/* Sticky weekly calendar */}
       <div style={{
-        position:"sticky", top:"56px", zIndex:50,
+        position:"sticky", top:"calc(56px + env(safe-area-inset-top))", zIndex:50,
         background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.75rem 1rem",
@@ -892,7 +892,7 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
 
       {/* Sticky total time banner — minimal */}
       <div style={{
-        position:"sticky", top:"56px", zIndex:50,
+        position:"sticky", top:"calc(56px + env(safe-area-inset-top))", zIndex:50,
         background: T.stickyBg,
         backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
         padding:"0.6rem 1rem", textAlign:"center",
@@ -1479,7 +1479,8 @@ function App() {
         {/* Header */}
         <div style={{ position:"sticky", top:0, zIndex:100,
           backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
-          background: T.mode==="light" ? "rgba(241,245,249,0.85)" : "rgba(0,0,0,0.85)" }}>
+          background: T.mode==="light" ? "rgba(241,245,249,0.85)" : "rgba(0,0,0,0.85)",
+          paddingTop:"env(safe-area-inset-top)" }}>
           <div style={{ maxWidth:"480px", margin:"0 auto", padding:"0.75rem 1rem",
             display:"flex", alignItems:"center", justifyContent:"space-between",
             position:"relative", zIndex:1 }}>
@@ -1603,7 +1604,7 @@ function App() {
           <div key={screen} style={{
             position:"fixed", bottom:0, left:0, right:0, zIndex:200,
             display:"flex", justifyContent:"center",
-            padding:"1rem 2rem 2.5rem",
+            padding:`1rem 2rem calc(2.5rem + env(safe-area-inset-bottom))`,
             background: T.mode==="light"
               ? "linear-gradient(to top, rgba(241,245,249,1) 60%, rgba(241,245,249,0))"
               : "linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0))",
