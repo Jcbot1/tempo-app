@@ -168,10 +168,11 @@ const btn = (variant = "primary", small = false) => ({
   display:"flex", alignItems:"center", justifyContent:"center", gap:"0.5rem",
   padding: small ? "0.45rem 1rem" : "0.65rem 1.5rem",
   fontFamily:SYS, fontWeight:600, fontSize: small ? "0.82rem" : "0.9rem",
-  borderRadius:"8px", cursor:"pointer", border:"none", transition:"opacity 0.15s",
-  ...(variant==="primary" && { background:`linear-gradient(135deg,${T.accent} 0%,${T.gradient2} 100%)`, color:"#fff" }),
-  ...(variant==="ghost"   && { background:T.surface2, color:T.muted2 }),
-  ...(variant==="danger"  && { background:T.red+"22", color:T.red }),
+  borderRadius:"8px", cursor:"pointer", border:"none", transition:"background 0.15s, opacity 0.15s",
+  ...(variant==="primary"      && { background:`linear-gradient(135deg,${T.accent} 0%,${T.gradient2} 100%)`, color:"#fff" }),
+  ...(variant==="ghost"        && { background:T.surface2, color:T.muted2 }),
+  ...(variant==="danger"       && { background:T.red+"22",   color:T.red }),
+  ...(variant==="accent-tonal" && { background:T.accent+"22", color:T.accent }),
 });
 
 const card = (extra = {}) => ({
@@ -1369,8 +1370,8 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
   );
 }
 
-function ConfirmModal({ title, titleColor, heading, body, confirmLabel, onConfirm, onClose }) {
-  const color = titleColor || T.red;
+function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", onConfirm, onClose }) {
+  const color = variant === "accent-tonal" ? T.accent : T.red;
   return (
     <div style={{ position:"fixed", inset:0, background:T.overlayBg,
       zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
@@ -1389,15 +1390,14 @@ function ConfirmModal({ title, titleColor, heading, body, confirmLabel, onConfir
             onPointerDown={e => e.currentTarget.style.background = color+"55"}
             onPointerUp={e => { e.currentTarget.style.background = color+"22"; onConfirm(); }}
             onPointerLeave={e => e.currentTarget.style.background = color+"22"}
-            style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center",
-              width:"100%", background:color+"22", color, transition:"background 0.1s" }}>
+            style={{ ...btn(variant), borderRadius:"99px", justifyContent:"center", width:"100%" }}>
             {confirmLabel}
           </button>
           <button
             onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
             onPointerUp={e => { e.currentTarget.style.background = ""; onClose(); }}
             onPointerLeave={e => e.currentTarget.style.background = ""}
-            style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%", transition:"background 0.1s" }}>
+            style={{ ...btn("ghost"), borderRadius:"99px", justifyContent:"center", width:"100%" }}>
             Keep going
           </button>
         </div>
@@ -1592,7 +1592,7 @@ function App() {
           onClose={() => setConfirmReset(false)} />}
 
         {confirmSkipAll && <ConfirmModal
-          title="SKIP TO COOLDOWN" titleColor={T.accent}
+          title="SKIP TO COOLDOWN" variant="accent-tonal"
           heading="Skip remaining sets?"
           body="Jump straight to the cool down phase."
           confirmLabel="Skip to cool down"
