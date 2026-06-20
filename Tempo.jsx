@@ -1407,22 +1407,22 @@ function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", 
           color:T.text, marginBottom:"0.5rem" }}>{heading}</p>
         <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
           lineHeight:1.5, marginBottom:"1.5rem" }}>{body}</p>
-        <div style={{ display:"flex", gap:"0.5rem" }}>
-          <button
-            onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
-            onPointerUp={e => { e.currentTarget.style.background = T.surface2; onClose(); }}
-            onPointerLeave={e => e.currentTarget.style.background = T.surface2}
-            onPointerCancel={e => e.currentTarget.style.background = T.surface2}
-            style={{ ...btn("ghost"), borderRadius:"99px", flex:1 }}>
-            Keep going
-          </button>
+        <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem" }}>
           <button
             onPointerDown={e => e.currentTarget.style.background = color+"55"}
             onPointerUp={e => { e.currentTarget.style.background = color+"22"; onConfirm(); }}
             onPointerLeave={e => e.currentTarget.style.background = color+"22"}
             onPointerCancel={e => e.currentTarget.style.background = color+"22"}
-            style={{ ...btn(variant), borderRadius:"99px", flex:1 }}>
+            style={{ ...btn(variant), borderRadius:"99px", width:"100%" }}>
             {confirmLabel}
+          </button>
+          <button
+            onPointerDown={e => e.currentTarget.style.background = T.pressBgSoft}
+            onPointerUp={e => { e.currentTarget.style.background = T.surface2; onClose(); }}
+            onPointerLeave={e => e.currentTarget.style.background = T.surface2}
+            onPointerCancel={e => e.currentTarget.style.background = T.surface2}
+            style={{ ...btn("ghost"), borderRadius:"99px", width:"100%" }}>
+            Keep going
           </button>
         </div>
       </div>
