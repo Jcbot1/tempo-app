@@ -750,7 +750,7 @@ function HistoryScreen({ onClose }) {
             return (
               <button key={iso} onClick={() => setSelectedDate(iso)} style={{
                 display:"flex", flexDirection:"column", alignItems:"center", gap:"0.25rem",
-                background:"none", border:"none", cursor:"pointer", padding:"0.3rem 0.4rem",
+                background:"none", border:"none", cursor:"pointer", padding:"0.3rem 0.9rem",
                 borderRadius:"10px",
                 transition:"background 0.15s",
                 background: isSelected
