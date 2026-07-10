@@ -413,16 +413,15 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
         onPointerCancel={() => setHamburgerPressed(false)}
         className="glass-btn"
         style={{
-        background: hamburgerPressed ? T.pressBgStrong : T.glassBg,
-        backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
-        border:"1px solid "+T.glassBorder,
+        background:"transparent",
+        border:"none",
         borderRadius:"99px", cursor:"pointer", display:"flex",
         alignItems:"center", justifyContent:"center",
         width:"44px", height:"44px", flexShrink:0,
-        transition:"background 0.1s",
-        boxShadow: T.glassShadow,
+        opacity: hamburgerPressed ? 0.7 : 1,
+        transition:"opacity 0.1s",
       }}>
-        <ProfileIconDisplay iconId={profileIconId} bg={profileBg} iconColor={profileIColor} size={40} />
+        <ProfileIconDisplay iconId={profileIconId} bg={profileBg} iconColor={profileIColor} size={44} />
       </button>
 
       {open && (
