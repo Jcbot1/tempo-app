@@ -772,53 +772,49 @@ function HistoryScreen({ onClose }) {
         </div>
       </div>
 
-      {/* Workout cards for selected day */}
-      <div style={{ padding:"0.75rem 0 6rem", flex:1 }}>
+      {/* Workout entries for selected day — flat list, no card boxes */}
+      <div style={{ padding:"0.25rem 0 6rem", flex:1 }}>
         {selectedWorkouts.length === 0 ? (
           <div style={{ display:"flex", flexDirection:"column", alignItems:"center",
-            justifyContent:"center", padding:"3rem 1rem", gap:"0.75rem" }}>
-            <p style={{ fontFamily:SYS, fontSize:"2rem" }}>
-            {["🏃","🏋️","🤸","⛹️","🚴","🤾","🧘","🏊","⛹️‍♀️","🤸‍♀️","🏋️‍♀️","🤾‍♂️","🤾‍♀️","🏊‍♀️","🧘‍♀️","🧘‍♂️","🤽‍♀️","🤽","⛹️‍♂️","🤸‍♂️","🏋️‍♂️","🚴‍♀️","🚴‍♂️"][Math.floor(Math.random() * 23)]}
-          </p>
-            <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1rem", color:T.muted2 }}>No workouts this day</p>
-            <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted }}>Completed workouts will appear here</p>
+            justifyContent:"center", padding:"3.5rem 1rem", gap:"0.6rem" }}>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={T.muted}
+              strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom:"0.25rem" }}>
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"0.95rem", color:T.muted2 }}>No workouts this day</p>
+            <p style={{ fontFamily:SYS, fontSize:"0.82rem", color:T.muted }}>Completed workouts will appear here</p>
           </div>
         ) : (
           selectedWorkouts.map((entry, i) => (
-            <div key={i} style={{ background:T.surface, border:"1px solid "+T.border,
-              borderRadius:"12px", padding:"1rem 1.25rem", marginBottom:"0.75rem" }}>
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.75rem" }}>
-                <div>
-                  <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1rem", color:T.text }}>
-                    {new Date(entry.timestamp).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })}
-                  </p>
-                  <p style={{ fontFamily:SYS, fontSize:"0.78rem", color:T.muted, marginTop:"0.1rem" }}>
-                    {fmt(entry.durationSec)} total
-                  </p>
+            <Fragment key={i}>
+              <div style={{ padding:"1.1rem 0" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.5rem" }}>
+                  <div>
+                    <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1rem", color:T.text }}>
+                      {new Date(entry.timestamp).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })}
+                    </p>
+                    <p style={{ fontFamily:SYS, fontSize:"0.78rem", color:T.muted, marginTop:"0.15rem" }}>
+                      {fmt(entry.durationSec)} total
+                    </p>
+                  </div>
+                  <div style={{ textAlign:"right" }}>
+                    <p style={{ fontFamily:SYS, fontWeight:700, fontSize:"1.15rem", color:T.accent, lineHeight:1.2 }}>
+                      {entry.completedRounds}<span style={{ fontWeight:400, fontSize:"0.85rem", color:T.muted }}>/{entry.totalRounds}</span>
+                    </p>
+                    <p style={{ fontFamily:SYS, fontSize:"0.68rem", letterSpacing:"0.04em",
+                      textTransform:"uppercase", color:T.muted }}>rounds</p>
+                  </div>
                 </div>
-                <div style={{ textAlign:"right" }}>
-                  <p style={{ fontFamily:SYS, fontWeight:700, fontSize:"1.1rem", color:T.accent }}>
-                    {entry.completedRounds}/{entry.totalRounds}
-                  </p>
-                  <p style={{ fontFamily:SYS, fontSize:"0.72rem", color:T.muted }}>rounds</p>
-                </div>
+                <p style={{ fontFamily:SYS, fontSize:"0.8rem", color:T.muted2 }}>
+                  {entry.sets} sets · {entry.exercises} exercises
+                  {entry.skippedRounds > 0 && <span style={{ color:T.red }}> · {entry.skippedRounds} skipped</span>}
+                </p>
               </div>
-              <div style={{ display:"flex", gap:"0.5rem", flexWrap:"wrap" }}>
-                {[
-                  `${entry.sets} sets`,
-                  `${entry.exercises} exercises`,
-                  entry.skippedRounds > 0 ? `${entry.skippedRounds} skipped` : null,
-                ].filter(Boolean).map((tag, j) => (
-                  <span key={j} style={{ fontFamily:SYS, fontSize:"0.72rem",
-                    background: tag.includes("skipped") ? T.red+"22" : T.surface2,
-                    color: tag.includes("skipped") ? T.red : T.muted2,
-                    padding:"0.2rem 0.6rem", borderRadius:"99px",
-                    border:"1px solid "+(tag.includes("skipped") ? T.red+"44" : T.border) }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+              {i < selectedWorkouts.length - 1 && (
+                <div style={{ height:"0.5px", background:T.divider }} />
+              )}
+            </Fragment>
           ))
         )}
       </div>
