@@ -173,6 +173,7 @@ let T = buildTheme(
 const btn = (variant = "primary", small = false) => ({
   display:"flex", alignItems:"center", justifyContent:"center", gap:"0.5rem",
   padding: small ? "0.45rem 1rem" : "0.65rem 1.5rem",
+  minHeight: small ? "44px" : "48px",
   fontFamily:SYS, fontWeight:600, fontSize: small ? "0.82rem" : "0.9rem",
   borderRadius:"8px", cursor:"pointer", border:"none", transition:"background 0.15s, opacity 0.15s",
   ...(variant==="primary"      && { background:`linear-gradient(135deg,${T.accent} 0%,${T.gradient2} 100%)`, color:"#fff" }),
@@ -394,8 +395,8 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
       <button onClick={back}
         onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
         style={{ background:"none", border:"none", color:T.muted2,
-        cursor:"pointer", fontSize:"1.3rem", padding:"0 0.25rem", lineHeight:1,
-        display:"flex", alignItems:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
+        cursor:"pointer", fontSize:"1.3rem", lineHeight:1, width:"44px", height:"44px",
+        display:"flex", alignItems:"center", justifyContent:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
       <p style={{ fontFamily:SYS_MONO, fontSize:"0.68rem",
         letterSpacing:"0.12em", color:T.muted2 }}>{label}</p>
     </div>
@@ -616,8 +617,8 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                   <button onClick={() => setSection(null)}
                     onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
                     style={{ background:"none", border:"none", color:T.muted2, cursor:"pointer",
-                      fontSize:"1.3rem", padding:"0 0.25rem", lineHeight:1,
-                      display:"flex", alignItems:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
+                      fontSize:"1.3rem", lineHeight:1, width:"44px", height:"44px",
+                      display:"flex", alignItems:"center", justifyContent:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
                   <p style={{ fontFamily:SYS_MONO, fontSize:"0.68rem",
                     letterSpacing:"0.12em", color:T.muted2 }}>APPEARANCE</p>
                 </div>
@@ -632,7 +633,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                     const active = theme === opt.id || (opt.id === "system" && theme.startsWith("system"));
                     return (
                       <button key={opt.id} onClick={() => onSetTheme(opt.id)} style={{
-                        width:"30px", height:"26px", borderRadius:"99px", border:"none",
+                        width:"38px", height:"36px", borderRadius:"99px", border:"none",
                         cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
                         background: active ? (T.mode==="light" ? "#fff" : "#3d3558") : "transparent",
                         color: active ? T.accent : T.muted,
@@ -869,7 +870,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerLeave={() => handleLeave(setMinusPressed)}
           onPointerCancel={() => handleLeave(setMinusPressed)}
           style={{
-          width:"36px", height:"36px", borderRadius:"99px",
+          width:"44px", height:"44px", borderRadius:"99px",
           background: minusPressed ? T.pressBg : "transparent",
           border:"1px solid "+T.border,
           color:T.muted2, cursor:"pointer",
@@ -889,7 +890,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
           onPointerLeave={() => handleLeave(setPlusPressed)}
           onPointerCancel={() => handleLeave(setPlusPressed)}
           style={{
-          width:"36px", height:"36px", borderRadius:"99px",
+          width:"44px", height:"44px", borderRadius:"99px",
           background: plusPressed ? T.pressBg : "transparent",
           border:"1px solid "+T.border,
           color:T.muted2, cursor:"pointer",
