@@ -731,7 +731,7 @@ function HistoryScreen({ onClose }) {
   const dayLabels = ["M","T","W","T","F","S","S"];
 
   return (
-    <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 56px)" }}>
+    <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 68px - env(safe-area-inset-top))" }}>
 
       {/* Sticky weekly calendar */}
       <div style={{
@@ -861,7 +861,7 @@ function RowInput({ label, value, onChange, min, max, step = 1, isTime = false }
   }
 
   return (
-    <div style={{ padding:"0.85rem 1rem", textAlign:"center" }}>
+    <div style={{ padding:"0.7rem 1rem", textAlign:"center" }}>
       <p style={{ fontFamily:SYS, fontSize:"0.78rem", color:T.muted, marginBottom:"0.35rem" }}>{label}</p>
       <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:"1.5rem" }}>
         <button
@@ -933,7 +933,7 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
   ];
 
   return (
-    <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 56px)" }}>
+    <div className="fade-up" style={{ display:"flex", flexDirection:"column", height:"100%", minHeight:"calc(100vh - 68px - env(safe-area-inset-top))" }}>
 
       {/* Sticky total time banner */}
       <div style={{
@@ -953,7 +953,7 @@ function HomeScreen({ onStart, settings, onSettingsChange }) {
       </div>
 
       {/* Scrollable rows — no card, floats on background */}
-      <div style={{ padding:"0.5rem 0 6rem" }}>
+      <div style={{ padding:"0.5rem 0 4.5rem" }}>
         {rows.map((row, i) => (
           <Fragment key={row.label}>
             <RowInput {...row} />
@@ -983,7 +983,7 @@ function DoneScreen({ onBack, sets, exercises, completedRounds }) {
 
   return (
     <div className="fade-up" style={{ display:"flex", flexDirection:"column", alignItems:"center",
-      justifyContent:"center", minHeight:"calc(100vh - 56px)", gap:"2rem", padding:"2rem",
+      justifyContent:"center", minHeight:"calc(100vh - 68px - env(safe-area-inset-top))", gap:"2rem", padding:"2rem",
       textAlign:"center" }}>
       <div style={{ width:"180px", height:"180px", display:"flex", alignItems:"center", justifyContent:"center" }}>
         <div key={emojiClass} className={emojiClass}
@@ -1211,7 +1211,7 @@ function TimerScreen({ config, onBack, onRequestQuit, onRequestResetWorkout, onR
 
   return done ? <DoneScreen onBack={onBack} sets={sets} exercises={exercises} completedRounds={finishedRounds} /> : (
     <div className="fade-up" style={{ display:"flex", flexDirection:"column", gap:"1rem",
-      alignItems:"center", minHeight:"calc(100vh - 56px)", justifyContent:"center",
+      alignItems:"center", minHeight:"calc(100vh - 68px - env(safe-area-inset-top))", justifyContent:"center",
       marginTop:"-5vh", paddingBottom:"2rem" }}>
 
       <div style={{ position:"relative", width:"300px", height:"300px", flexShrink:0 }}>
@@ -1669,7 +1669,7 @@ function App() {
           <div key={screen} style={{
             position:"fixed", bottom:0, left:0, right:0, zIndex:200,
             display:"flex", justifyContent:"center",
-            padding:`1rem 2rem calc(2.5rem + env(safe-area-inset-bottom))`,
+            padding:`1rem 2rem calc(1.25rem + env(safe-area-inset-bottom))`,
             background: T.mode==="light"
               ? "linear-gradient(to top, rgba(241,245,249,1) 60%, rgba(241,245,249,0))"
               : "linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0))",
