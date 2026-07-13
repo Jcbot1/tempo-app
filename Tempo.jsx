@@ -611,17 +611,11 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 
           {section === "appearance" && (
             <>
-              <div style={{ padding:"0.7rem 1.25rem", borderBottom:"0.5px solid "+T.border,
-                display:"flex", alignItems:"center", justifyContent:"space-between", minHeight:"56px" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:"0.6rem" }}>
-                  <button onClick={() => setSection(null)}
-                    onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease}
-                    style={{ background:"none", border:"none", color:T.muted2, cursor:"pointer",
-                      fontSize:"1.3rem", lineHeight:1, width:"44px", height:"44px",
-                      display:"flex", alignItems:"center", justifyContent:"center", borderRadius:"99px", transition:"background 0.1s" }}>&#8249;</button>
-                  <p style={{ fontFamily:SYS_MONO, fontSize:"0.68rem",
-                    letterSpacing:"0.12em", color:T.muted2 }}>APPEARANCE</p>
-                </div>
+              {sectionHeader("APPEARANCE", () => setSection(null))}
+
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+                padding:"0.9rem 1.25rem" }}>
+                <span style={{ fontFamily:SYS, fontSize:"0.95rem", color:T.text }}>Theme</span>
                 <div style={{ display:"flex",
                   background: T.mode==="light" ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.07)",
                   borderRadius:"99px", padding:"0.2rem", gap:"0.1rem" }}>
@@ -643,7 +637,8 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
                   })}
                 </div>
               </div>
-              <button onClick={() => setSection("color")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle }}
+              <button onClick={() => setSection("color")} onPointerDown={menuPress} onPointerUp={menuRelease} onPointerLeave={menuRelease} onPointerCancel={menuRelease} style={{ ...menuItemStyle,
+                borderTop:T.hairline }}
                >
                 <span style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
                   <span style={{ width:"18px", height:"18px", borderRadius:"50%",
@@ -1576,18 +1571,25 @@ function App() {
               <div style={{ width:"44px" }} />
             )}
 
-            <svg width="80" height="28" style={{ overflow:"visible", display:"block" }}>
-              <defs>
-                <linearGradient id="tempoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor={T.accent} />
-                  <stop offset="100%" stopColor={T.gradient2} />
-                </linearGradient>
-              </defs>
-              <text x="50%" y="22" textAnchor="middle" fill="url(#tempoGrad)"
-                style={{ fontFamily:SYS, fontWeight:700, fontSize:"1.2rem", letterSpacing:"0.02em" }}>
-                Temp<tspan fontStyle="italic">o</tspan>
-              </text>
-            </svg>
+            {screen === "history" ? (
+              <p style={{ fontFamily:SYS, fontWeight:700, fontSize:"1.15rem",
+                color:T.text, letterSpacing:"0.01em" }}>History</p>
+            ) : screen === "timer" ? (
+              <div />
+            ) : (
+              <svg width="80" height="28" style={{ overflow:"visible", display:"block" }}>
+                <defs>
+                  <linearGradient id="tempoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor={T.accent} />
+                    <stop offset="100%" stopColor={T.gradient2} />
+                  </linearGradient>
+                </defs>
+                <text x="50%" y="22" textAnchor="middle" fill="url(#tempoGrad)"
+                  style={{ fontFamily:SYS, fontWeight:700, fontSize:"1.2rem", letterSpacing:"0.02em" }}>
+                  Temp<tspan fontStyle="italic">o</tspan>
+                </text>
+              </svg>
+            )}
 
             <GlobalNav
               theme={theme} onSetTheme={handleSetTheme}
