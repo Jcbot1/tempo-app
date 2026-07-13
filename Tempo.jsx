@@ -688,9 +688,25 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
 // ─── Workout History ─────────────────────────────────────────────────────────
 const HISTORY_KEY = "workoutapp_history";
 
+// Monday 00:00 of the week containing d — history has no way to browse past
+// weeks, so anything older than this is unreachable and gets purged.
+function mondayOfWeek(d = new Date()) {
+  const date = new Date(d); date.setHours(0,0,0,0);
+  const dow = date.getDay(); // 0=Sun
+  date.setDate(date.getDate() - (dow === 0 ? 6 : dow - 1));
+  return date;
+}
+
 function loadHistory() {
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); }
-  catch(e) { return []; }
+  try {
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    const weekStart = mondayOfWeek().toISOString().split('T')[0];
+    const current = history.filter(e => e.date >= weekStart);
+    if (current.length !== history.length) {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(current));
+    }
+    return current;
+  } catch(e) { return []; }
 }
 
 function saveWorkoutToHistory(entry) {
@@ -713,9 +729,7 @@ function HistoryScreen({ onClose }) {
 
   // Build current week Mon–Sun
   const today = new Date(); today.setHours(0,0,0,0);
-  const dayOfWeek = today.getDay(); // 0=Sun
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+  const monday = mondayOfWeek(today);
   const weekDays = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday); d.setDate(monday.getDate() + i);
     return d;
