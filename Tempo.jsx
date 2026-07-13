@@ -433,7 +433,7 @@ function GlobalNav({ theme, onSetTheme, accent, onSetAccent, profileName, profil
           border:"1px solid "+(T.mode==="light" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.08)"),
           borderRadius:"16px", overflow:"hidden",
           boxShadow: T.mode==="light" ? "0 8px 40px rgba(0,0,0,0.12)" : "0 8px 40px rgba(0,0,0,0.4)",
-          minWidth:"260px",
+          minWidth:"220px",
         }}>
 
           {section === null && (
@@ -1437,8 +1437,8 @@ function ConfirmModal({ title, heading, body, confirmLabel, variant = "danger", 
     <div style={modalOverlay()} onClick={onClose}>
       <div style={{ ...card({ maxWidth:"300px", width:"100%", padding:"2rem" }), boxShadow:T.modalShadow }}
         onClick={e => e.stopPropagation()}>
-        <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
-          color, marginBottom:"0.5rem" }}>{title}</p>
+        {title && <p style={{ fontFamily:SYS_MONO, fontSize:"0.64rem", letterSpacing:"0.1em",
+          color, marginBottom:"0.5rem" }}>{title}</p>}
         <p style={{ fontFamily:SYS, fontWeight:600, fontSize:"1.05rem",
           color:T.text, marginBottom:"0.5rem" }}>{heading}</p>
         <p style={{ fontFamily:SYS, fontSize:"0.85rem", color:T.muted2,
@@ -1643,7 +1643,7 @@ function App() {
         </div>
 
         {confirmQuit && <ConfirmModal
-          title="QUIT WORKOUT" heading="End this session?"
+          heading="End this session?"
           body="Your progress won't be saved."
           confirmLabel="End workout"
           onConfirm={() => { setConfirmQuit(false); if (quitCallback) quitCallback(); }}
